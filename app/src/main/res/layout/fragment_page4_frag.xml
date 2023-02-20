@@ -11,6 +11,7 @@
 
         android:textSize="40sp"
         android:textStyle="bold"
+        android:text="사진 프래그먼트"
         android:gravity="center"/>
 
 </LinearLayout>
