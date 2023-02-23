@@ -5,14 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/date_button"
+    <TextView
+        android:id="@+id/date_Tv"
         android:layout_width="170dp"
         android:layout_height="50dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         android:text="2000년 10월 10일"
+        android:gravity="center"
+        android:textColor="#FFAAAF"
+        android:textStyle="bold"
+        android:textSize="16dp"
         android:layout_marginTop="20dp"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,8 +23,6 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActionBar ab = getSupportActionBar();
-        ab.setTitle("일상");
         setContentView(R.layout.activity_main);
         setTabLayout();
         fabAct();
