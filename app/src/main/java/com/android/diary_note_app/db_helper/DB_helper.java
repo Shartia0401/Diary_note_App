@@ -48,15 +48,27 @@ public class DB_helper extends SQLiteOpenHelper {
     }
 
     public void delete(){
-
+        String str =
+                "";
+        callDB(str);
     }
 
     public void tbClear(){
-
+        String str =
+                "";
+        callDB(str);
     }
 
     public void modify(){
+        String str =
+                "";
+        callDB(str);
+    }
 
+    public void getList(){
+        String str =
+                "";
+        callDB(str);
     }
 
     private void callDB(String str){
@@ -64,6 +76,7 @@ public class DB_helper extends SQLiteOpenHelper {
         db.execSQL(str);
         db.close();
     }
+
 
 
 }

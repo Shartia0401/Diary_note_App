@@ -38,7 +38,7 @@
             android:layout_marginBottom="15dp"
             android:layout_marginEnd="15dp"
             app:srcCompat="@android:drawable/ic_menu_edit"
-            app:backgroundTint="#FA6D6D"/>
+            app:backgroundTint="#FFCC64"/>
 
     </RelativeLayout>
 
