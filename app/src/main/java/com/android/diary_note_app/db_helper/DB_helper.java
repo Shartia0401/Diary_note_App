@@ -1,6 +1,7 @@
 package com.android.diary_note_app.db_helper;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
@@ -65,10 +66,15 @@ public class DB_helper extends SQLiteOpenHelper {
         callDB(str);
     }
 
-    public void getList(){
+    public Cursor getList(){
+
+        SQLiteDatabase db = getReadableDatabase();
         String str =
-                "";
-        callDB(str);
+                "Select date, emoji, title, content, attachment From DiaryDB";
+        Cursor cursor = db.rawQuery(str,null);
+        cursor.moveToFirst();
+
+        return cursor;
     }
 
     private void callDB(String str){
