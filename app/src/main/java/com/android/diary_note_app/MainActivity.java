@@ -1,12 +1,16 @@
 package com.android.diary_note_app;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
 import androidx.viewpager.widget.ViewPager;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -23,7 +27,22 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         setTabLayout();
         fabAct();
+        applyColors();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setContentView(R.layout.activity_main);
+        setTabLayout();
+        fabAct();
+        applyColors();
+    }
+
+    // Apply the title/navigation bar color
+    private void applyColors() {
+        getWindow().setStatusBarColor(Color.parseColor("#FFBB66"));
+        getWindow().setNavigationBarColor(Color.parseColor("#FFBB66"));
     }
 
     private void fabAct(){
@@ -31,8 +50,8 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(),editActivity.class);
             startActivity(intent);
-        });
 
+        });
     }
 
     private void setTabLayout(){
@@ -58,4 +77,6 @@ public class MainActivity extends AppCompatActivity {
             public void onTabReselected(TabLayout.Tab tab) {}
         });
     }
+
+
 }

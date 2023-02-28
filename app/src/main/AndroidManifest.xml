@@ -17,7 +17,7 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.Diary_note_App"
-        tools:targetApi="29">
+        tools:targetApi="s">
         <activity
             android:name=".MainActivity"
             android:exported="false" />

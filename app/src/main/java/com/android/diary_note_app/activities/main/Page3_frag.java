@@ -15,7 +15,6 @@ import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.android.diary_note_app.R;
-import com.android.diary_note_app.activities.ui.calender.SelectDate;
 import com.android.diary_note_app.activities.ui.picker.YMPickerListener;
 import com.android.diary_note_app.activities.ui.picker.YMPickerPopupDialogTwoButton;
 import com.prolificinteractive.materialcalendarview.CalendarDay;

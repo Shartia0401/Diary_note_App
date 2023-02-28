@@ -49,7 +49,31 @@ public class ScrollingFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_scrolling, container, false);
         refresh();
+        if(getArguments() != null){
+            setBundle(getArguments());
+        }
         return v;
+    }
+
+    private void setBundle(Bundle bundle){
+        String date = bundle.getString("date");
+        String title = bundle.getString("title");
+        String content = bundle.getString("content");
+        String path = bundle.getString("attachment");
+        date_tv.setText(date);
+        title_et.setText(title);
+        content_et.setText(content);
+
+        uri = Uri.parse(path);
+        Bitmap bitmap = null;
+        try {
+            bitmap = MediaStore.Images.Media.getBitmap(v.getContext().getContentResolver(), uri);
+        } catch (IOException e) {
+            System.err.println("파일 없음");
+        }
+        ImageView imageView = v.findViewById(R.id.edit_imageView);
+        imageView.setImageBitmap(bitmap);
+
     }
 
     private void refresh(){
@@ -88,7 +112,6 @@ public class ScrollingFragment extends Fragment {
     }
 
     private void setDate(int year, int month, int day){
-        Toast.makeText(getActivity(), Integer.toString(month), Toast.LENGTH_SHORT).show();
         String str= year + "년 " + month+ "월 " + day + "일";
         date_tv.setText(str);
     }
@@ -106,17 +129,19 @@ public class ScrollingFragment extends Fragment {
                 intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
                 intent.setAction(Intent.ACTION_PICK);
                 activityResultLauncher.launch(intent);
+                Toast.makeText(getContext(), "파일을 불러옵니다", Toast.LENGTH_SHORT).show();
             }
         });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DB_helper db_helper = new DB_helper(getContext()    );
+                DB_helper db_helper = new DB_helper(getContext());
                 title = title_et.getText().toString();
                 content = content_et.getText().toString();
 
                 db_helper.insert(date_tv.getText().toString(), title, null, content, path);
+                Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
             }
         });
     }

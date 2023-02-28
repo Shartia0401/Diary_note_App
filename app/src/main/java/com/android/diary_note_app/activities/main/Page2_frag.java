@@ -11,9 +11,10 @@ import android.widget.TextView;
 
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.ui.calender.OneDayDecorator;
-import com.android.diary_note_app.activities.ui.calender.SelectDate;
 import com.android.diary_note_app.activities.ui.calender.SundayDecoder;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
+import com.prolificinteractive.materialcalendarview.DayViewDecorator;
+import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
@@ -36,8 +37,7 @@ public class Page2_frag extends Fragment {
         }
         materialCalendarView.addDecorators(
                 new SundayDecoder(),
-                new OneDayDecorator(),
-                new SelectDate(getContext())
+                new OneDayDecorator()
         );
         materialCalendarView.setOnDateChangedListener(new OnDateSelectedListener() {
             @Override
@@ -54,6 +54,7 @@ public class Page2_frag extends Fragment {
 
         return v;
     }
+
 
 
 

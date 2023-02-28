@@ -70,7 +70,7 @@ public class DB_helper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         String str =
-                "Select date, emoji, title, content, attachment From DiaryDB";
+                "Select numID, date, emoji, title, content, attachment From DiaryDB";
         Cursor cursor = db.rawQuery(str,null);
         cursor.moveToFirst();
 
@@ -81,6 +81,16 @@ public class DB_helper extends SQLiteOpenHelper {
         SQLiteDatabase db = getWritableDatabase();
         db.execSQL(str);
         db.close();
+    }
+
+    public Cursor getData(String table, String id){
+        SQLiteDatabase db = getReadableDatabase();
+        String str =
+                "Select numID, date, emoji, title, content, attachment From " + table + " where numID = " + id ;
+        Cursor cursor = db.rawQuery(str,null);
+        cursor.moveToFirst();
+
+        return cursor;
     }
 
 

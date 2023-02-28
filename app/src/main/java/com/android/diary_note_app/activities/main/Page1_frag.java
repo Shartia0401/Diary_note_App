@@ -29,7 +29,7 @@ public class Page1_frag extends Fragment {
 
     public void setRecyclerView() {
         recyclerView = v.findViewById(R.id.recycle);
-        new Recycle_grid(recyclerView, getActivity());
+        new Recycle_grid(recyclerView, getActivity(), 1);
 
     }
 }

@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -18,12 +19,12 @@ import com.android.diary_note_app.R;
 import java.io.IOException;
 import java.util.ArrayList;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder>{
+public class frag4_RecyclerViewAdapter extends RecyclerView.Adapter<frag4_RecyclerViewAdapter.MyViewHolder>{
 
     Context context;
     ArrayList<Item> list;
 
-    public RecyclerViewAdapter(Context context, ArrayList<Item> list) {
+    public frag4_RecyclerViewAdapter(Context context, ArrayList<Item> list) {
         super();
         this.context = context;
         this.list = list;
@@ -32,12 +33,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Bitmap bitmap = setImg(list.get(position).image);
-
-        holder.id.setText(list.get(position).Id);
-        holder.date.setText(list.get(position).date);
-        holder.emoji.setText(list.get(position).emoji);
-        holder.name.setText(list.get(position).name);
-        holder.content.setText(list.get(position).content);
+        holder.Id.setText(list.get(position).Id);
         holder.image.setImageBitmap(bitmap);
     }
 
@@ -57,14 +53,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(context).inflate(R.layout.recylcerview_row, parent, false);
+        View view = LayoutInflater.from(context).inflate(R.layout.recylcerview_row_frag4, parent, false);
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new OpenEditAct(view);
+                TextView a = view.findViewById(R.id.frag4_IdTextView);
+
+                Toast.makeText(view.getContext(), "id : " + a.getText()  , Toast.LENGTH_SHORT).show();
             }
         });
-
         return new MyViewHolder(view);
     }
 
@@ -74,22 +71,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
     public class MyViewHolder extends RecyclerView.ViewHolder{
 
-        TextView id;
-        TextView date;
-        TextView emoji;
-        TextView name;
-        TextView content;
         ImageView image;
-
+        TextView Id;
 
         public MyViewHolder(View itemView) {
             super(itemView);
-            id = itemView.findViewById(R.id.frag1_id);
-            image = itemView.findViewById(R.id.recyclerview_row_image);
-            date = itemView.findViewById(R.id.recyclerview_row_date);
-            emoji = itemView.findViewById(R.id.recyclerview_row_emoji);
-            name = itemView.findViewById(R.id.recyclerview_row_name);
-            content = itemView.findViewById(R.id.recyclerview_row_content);
+            image = itemView.findViewById(R.id.frag4_image);
+            Id = itemView.findViewById(R.id.frag4_IdTextView);
         }
     }
 }

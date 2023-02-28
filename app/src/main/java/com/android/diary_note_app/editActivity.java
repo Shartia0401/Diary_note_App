@@ -1,5 +1,7 @@
 package com.android.diary_note_app;
 
+import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
@@ -29,11 +31,25 @@ public class editActivity extends AppCompatActivity {
         assert actionBar != null;
         actionBar.setDisplayHomeAsUpEnabled(true);
 
+
         ScrollingFragment fragment = new ScrollingFragment();
+
+
+        if(getIntent() != null){
+            Bundle bundle = getIntent().getBundleExtra("data");
+            fragment.setArguments(bundle);
+        }
         FragmentManager fm = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fm.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_content, fragment);
         fragmentTransaction.commit();
+
+        applyColors();
+    }
+
+    private void applyColors() {
+        getWindow().setStatusBarColor(Color.parseColor("#FFBB66"));
+        getWindow().setNavigationBarColor(Color.parseColor("#FFBB66"));
     }
 
     @Override
@@ -54,7 +70,6 @@ public class editActivity extends AppCompatActivity {
             finish();
             return true;
         }
-
         return false;
     }
 }
