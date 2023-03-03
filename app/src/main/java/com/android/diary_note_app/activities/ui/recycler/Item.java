@@ -1,26 +1,21 @@
 package com.android.diary_note_app.activities.ui.recycler;
 
-import android.graphics.Bitmap;
-import android.provider.MediaStore;
-import android.widget.ImageView;
-
-import com.android.diary_note_app.R;
-
-import java.io.IOException;
-
 public class Item {
 
-    String date;
+    int year, month, day;
     String Id;
     String emoji;
     String name;
     String content;
     String attachment;
     String image;
+    int position;
 
-    public Item(String date, String emoji, String name, String content, String image, String Id) {
+    public Item(int year, int month, int day, String emoji, String name, String content, String image, String Id) {
         super();
-        this.date = date;
+        this.year = year;
+        this.month = month;
+        this.day = day;
         this.emoji = emoji;
         this.name = name;
         this.content = content;
@@ -28,6 +23,13 @@ public class Item {
         this.Id = Id;
     }
 
+    public void setPosition(int p){
+        this.position = p;
+    }
+
+    public int getPosition(){
+        return position;
+    }
 
 
     private void attachmentFilter(){

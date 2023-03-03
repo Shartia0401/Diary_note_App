@@ -28,7 +28,9 @@ public class DB_helper extends SQLiteOpenHelper {
         String str =
                 "CREATE TABLE DiaryDB (" +
                         "numID INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                        "date TEXT, " +
+                        "year INTEGER," +
+                        "month INTEGER," +
+                        "day INTEGER," +
                         "emoji TEXT, " +
                         "title TEXT, " +
                         "content TEXT, " +
@@ -36,21 +38,53 @@ public class DB_helper extends SQLiteOpenHelper {
         db.execSQL(str);
     }
 
-    public void insert(String date, String title, String emoji, String content, String attachment){
+    public void save(Data data){
+
+        if(data.id.equals("")){
+            insert(data);
+        }else{
+            update(data);
+        }
+    }
+
+    public void insert(Data data){
         String str =
-                "INSERT INTO DiaryDB VALUES(null, '"+date+"', '"+emoji+"','"+title+"', '"+content+"', '"+attachment+"')";
+                "INSERT INTO DiaryDB VALUES(" +
+                        "null, " +
+                        "'"+data.year+"', " +
+                        "'"+data.month+"', " +
+                        "'"+data.day+"', " +
+                        "'"+data.emoji+"', " +
+                        "'"+data.title+"', " +
+                        "'"+data.content+"', " +
+                        "'"+data.attachment+"');";
         callDB(str);
     }
 
-    public void update(){
+    public void update(Data data){
         String str =
-                "";
+                "UPDATE DiaryDB SET " +
+                        "year = '"+ data.year +"', " +
+                        "month = '"+ data.month +"', " +
+                        "day = '"+ data.day +"', " +
+                        "emoji = '"+ data.emoji +"', " +
+                        "title = '"+ data.title +"', " +
+                        "content = '"+ data.content +"', " +
+                        "attachment = '"+ data.attachment +"' " +
+                        "WHERE numID ='"+ data.id +"';";
         callDB(str);
     }
 
-    public void delete(){
+    public void order(){
         String str =
-                "";
+                "Select * from DiaryDB Order by numID";
+
+        callDB(str);
+    }
+
+    public void delete(int id){
+        String str =
+                "DELETE FROM DiaryDB WHERE numID= '"+ id + "';";
         callDB(str);
     }
 
@@ -70,7 +104,7 @@ public class DB_helper extends SQLiteOpenHelper {
 
         SQLiteDatabase db = getReadableDatabase();
         String str =
-                "Select numID, date, emoji, title, content, attachment From DiaryDB";
+                "Select numID, year, month, day, emoji, title, content, attachment From DiaryDB";
         Cursor cursor = db.rawQuery(str,null);
         cursor.moveToFirst();
 
@@ -86,13 +120,10 @@ public class DB_helper extends SQLiteOpenHelper {
     public Cursor getData(String table, String id){
         SQLiteDatabase db = getReadableDatabase();
         String str =
-                "Select numID, date, emoji, title, content, attachment From " + table + " where numID = " + id ;
+                "Select numID, year, month, day, emoji, title, content, attachment From " + table + " where numID = " + id ;
         Cursor cursor = db.rawQuery(str,null);
         cursor.moveToFirst();
 
         return cursor;
     }
-
-
-
 }

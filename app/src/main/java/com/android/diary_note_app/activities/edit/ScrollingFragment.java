@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -25,8 +24,12 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.db_helper.DB_helper;
+import com.android.diary_note_app.db_helper.Data;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.io.IOException;
 import java.util.Calendar;
@@ -36,10 +39,12 @@ public class ScrollingFragment extends Fragment {
     View v;
     Uri uri;
     String path;
+    int year_i, month_i, day_i;
 
     EditText title_et;
     EditText content_et;
     TextView date_tv;
+    TextView id_tv;
     String title;
     String content;
     CalendarDay today;
@@ -52,15 +57,26 @@ public class ScrollingFragment extends Fragment {
         if(getArguments() != null){
             setBundle(getArguments());
         }
+
+        new StyleSpinner(v);
         return v;
     }
 
     private void setBundle(Bundle bundle){
-        String date = bundle.getString("date");
+        String id = bundle.getString("id");
+
+        String year = bundle.getString("year");
+        String month = bundle.getString("month");
+        String day = bundle.getString("day");
+        String str = year + "년 " + month + "월 " + day + "일";
+
         String title = bundle.getString("title");
         String content = bundle.getString("content");
         String path = bundle.getString("attachment");
-        date_tv.setText(date);
+
+        id_tv.setText(id);
+        System.err.println(str);
+        date_tv.setText(str);
         title_et.setText(title);
         content_et.setText(content);
 
@@ -73,19 +89,20 @@ public class ScrollingFragment extends Fragment {
         }
         ImageView imageView = v.findViewById(R.id.edit_imageView);
         imageView.setImageBitmap(bitmap);
-
     }
 
     private void refresh(){
         title_et = v.findViewById(R.id.edit_title);
         content_et = v.findViewById(R.id.edit_content);
+        id_tv = v.findViewById(R.id.edit_id);
         today = CalendarDay.today();
         setTextView();
         setDate(today.getYear(), today.getMonth(), today.getDay());
         setBtn();
 
-
     }
+
+
 
     private void setTextView(){
         date_tv = v.findViewById(R.id.edit_TV);
@@ -95,20 +112,19 @@ public class ScrollingFragment extends Fragment {
         int mMonth = c.get(Calendar.MONTH);
         int mDay = c.get(Calendar.DAY_OF_MONTH);
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                setDate(year, month, dayOfMonth);
-            }
+        year_i = today.getYear();
+        month_i = today.getMonth();
+        day_i = today.getDay();
+
+        DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), (view, year, month, dayOfMonth) -> {
+            setDate(year, month + 1, dayOfMonth);
+            year_i = year;
+            month_i = month + 1;
+            day_i = dayOfMonth;
         }, mYear, mMonth, mDay);
 
 
-        date_tv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                datePickerDialog.show();
-            }
-        });
+        date_tv.setOnClickListener(view -> datePickerDialog.show());
     }
 
     private void setDate(int year, int month, int day){
@@ -122,42 +138,44 @@ public class ScrollingFragment extends Fragment {
         Button imageBtn = v.findViewById(R.id.edit_btn);
         Button saveBtn = v.findViewById(R.id.edit_savebtn);
 
-        imageBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(Intent.ACTION_PICK);
-                intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
-                intent.setAction(Intent.ACTION_PICK);
-                activityResultLauncher.launch(intent);
-                Toast.makeText(getContext(), "파일을 불러옵니다", Toast.LENGTH_SHORT).show();
-            }
+        imageBtn.setOnClickListener(view -> {
+            Intent intent = new Intent(Intent.ACTION_PICK);
+            intent.setDataAndType(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+            intent.setAction(Intent.ACTION_PICK);
+            activityResultLauncher.launch(intent);
+            Toast.makeText(getContext(), "파일을 불러옵니다", Toast.LENGTH_SHORT).show();
         });
 
-        saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                DB_helper db_helper = new DB_helper(getContext());
-                title = title_et.getText().toString();
-                content = content_et.getText().toString();
+        saveBtn.setOnClickListener(view -> {
+            DB_helper db_helper = new DB_helper(getContext());
+            title = title_et.getText().toString();
+            content = content_et.getText().toString();
+            String id = id_tv.getText().toString();
 
-                db_helper.insert(date_tv.getText().toString(), title, null, content, path);
-                Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
-            }
+            Data data = new Data(id, year_i, month_i, day_i, null, title, content, path);
+
+            db_helper.save(data);
+            Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
+
+
         });
     }
 
+
+
+
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
+            new ActivityResultCallback<>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if(result.getResultCode() == RESULT_OK){
+                    if (result.getResultCode() == RESULT_OK) {
                         Intent intent = result.getData();
                         assert intent != null;
                         uri = intent.getData();
                         path = uri.toString();
                         uri = Uri.parse(path);
-                        Bitmap bitmap = null;
+                        Bitmap bitmap;
                         try {
                             bitmap = MediaStore.Images.Media.getBitmap(v.getContext().getContentResolver(), uri);
                         } catch (IOException e) {

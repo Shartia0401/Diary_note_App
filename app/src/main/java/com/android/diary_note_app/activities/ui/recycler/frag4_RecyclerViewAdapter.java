@@ -58,10 +58,12 @@ public class frag4_RecyclerViewAdapter extends RecyclerView.Adapter<frag4_Recycl
             @Override
             public void onClick(View view) {
                 TextView a = view.findViewById(R.id.frag4_IdTextView);
-
+                new OpenEditAct(view, 4);
                 Toast.makeText(view.getContext(), "id : " + a.getText()  , Toast.LENGTH_SHORT).show();
             }
         });
+        ImageView image = view.findViewById(R.id.frag4_image);
+
         return new MyViewHolder(view);
     }
 

@@ -30,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         applyColors();
     }
 
+
     @Override
     protected void onResume() {
         super.onResume();
@@ -37,10 +38,12 @@ public class MainActivity extends AppCompatActivity {
         setTabLayout();
         fabAct();
         applyColors();
+
     }
 
     // Apply the title/navigation bar color
     private void applyColors() {
+
         getWindow().setStatusBarColor(Color.parseColor("#FFBB66"));
         getWindow().setNavigationBarColor(Color.parseColor("#FFBB66"));
     }
