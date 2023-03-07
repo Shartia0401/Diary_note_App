@@ -1,32 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
-        android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:id="@+id/Calender"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:mcv_selectionColor="#FFAAAF"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
+            <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+                android:layout_width="match_parent"
+                android:layout_height="500dp"
+                android:id="@+id/Calender"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:mcv_selectionColor="#FFAAAF"
+                />
 
-        />
-    <TextView
-        android:id="@+id/CalenderTv"
-        android:layout_width="match_parent"
-        android:layout_height="231dp"
-        android:text="XXXX년 XX월 XX일"
-        android:gravity="center"
-        android:textStyle="bold"
-        android:textSize="40dp"
-        app:layout_constraintTop_toBottomOf="@id/Calender"
-        android:background="@color/purple_200"/>
+            <TextView
+                android:id="@+id/CalenderTv"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="XXXX년 XX월 XX일"
+                android:gravity="center"
+                android:textStyle="bold"
+                android:textSize="40dp"
+                app:layout_constraintTop_toBottomOf="@id/Calender"
+                android:background="@color/purple_200"/>
 
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/frag2_recycler"
+                app:layout_constraintTop_toBottomOf="@id/CalenderTv"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                >
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.recyclerview.widget.RecyclerView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

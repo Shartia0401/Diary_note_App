@@ -71,5 +71,4 @@ public class StyleSpinner {
 
         return files;
     }
-
 }

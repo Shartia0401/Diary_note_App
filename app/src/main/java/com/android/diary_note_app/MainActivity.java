@@ -30,7 +30,6 @@ public class MainActivity extends AppCompatActivity {
         applyColors();
     }
 
-
     @Override
     protected void onResume() {
         super.onResume();

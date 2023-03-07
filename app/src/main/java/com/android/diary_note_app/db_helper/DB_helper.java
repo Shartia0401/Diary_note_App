@@ -18,7 +18,6 @@ public class DB_helper extends SQLiteOpenHelper {
 
     }
 
-
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
 
@@ -105,6 +104,17 @@ public class DB_helper extends SQLiteOpenHelper {
         SQLiteDatabase db = getReadableDatabase();
         String str =
                 "Select numID, year, month, day, emoji, title, content, attachment From DiaryDB";
+        Cursor cursor = db.rawQuery(str,null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
+    public Cursor getList(int year, int month, int day){
+
+        SQLiteDatabase db = getReadableDatabase();
+        String str =
+                "Select numID, emoji, title, content, attachment From DiaryDB where year = '"+year +"' AND month = '"+month+"' AND day = '"+day+"';";
         Cursor cursor = db.rawQuery(str,null);
         cursor.moveToFirst();
 

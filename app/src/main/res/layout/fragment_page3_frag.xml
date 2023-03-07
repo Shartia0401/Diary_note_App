@@ -14,7 +14,7 @@
         app:layout_constraintTop_toTopOf="parent"
         android:text="2000년 10월 10일"
         android:gravity="center"
-        android:textColor="#FFAAAF"
+        android:textColor="#FFBB66"
         android:textStyle="bold"
         android:textSize="16dp"
         android:layout_marginTop="20dp"/>

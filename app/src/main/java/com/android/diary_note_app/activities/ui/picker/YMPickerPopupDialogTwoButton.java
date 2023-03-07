@@ -3,6 +3,7 @@ package com.android.diary_note_app.activities.ui.picker;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.NumberPicker;
 import android.widget.TextView;
 
@@ -17,7 +18,7 @@ public class YMPickerPopupDialogTwoButton extends Dialog {
     private YMPickerListener listener;
     private NumberPicker year, month;
 
-    private TextView tvPositive, tvNegative;
+    private Button tvPositive, tvNegative;
 
     private int setYearValue;
     private int setMonthValue;

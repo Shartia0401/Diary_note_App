@@ -5,34 +5,42 @@ import android.database.Cursor;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.android.diary_note_app.activities.ui.recycler.listener.RecyclerDeleteListener;
 import com.android.diary_note_app.db_helper.DB_helper;
 
 import java.util.ArrayList;
 
-public class Recycle_grid{
+public class Recycle_grid implements RecyclerDeleteListener {
     RecyclerView recyclerView;
     RecyclerViewAdapter adapter;
     frag4_RecyclerViewAdapter frag4recyclerViewAdapter;
     GridLayoutManager layoutManager;
+    Context context;
+    int frag;
 
     public Recycle_grid(RecyclerView recyclerView_in, Context context, int frag){
+        this.context = context;
+        this.recyclerView = recyclerView_in;
+        this.frag = frag;
+
+        setRecyclerView();
+    }
+
+    private void setRecyclerView(){
         ArrayList<Item> list = setList(context, frag);
-        recyclerView = recyclerView_in;
 
         layoutManager = new GridLayoutManager(context, 2);
         recyclerView.setLayoutManager(layoutManager);
 
-
         if(frag == 1){
             adapter = new RecyclerViewAdapter(context, list);
             recyclerView.setAdapter(adapter);
+            adapter.setRecyclerDeleteListener(this);
 
         }else{
             frag4recyclerViewAdapter = new frag4_RecyclerViewAdapter(context, list);
             recyclerView.setAdapter(frag4recyclerViewAdapter);
         }
-
-
     }
 
     private ArrayList<Item> setList(Context context, int frag){
@@ -77,5 +85,13 @@ public class Recycle_grid{
 
         dbHelper.close();
         return list;
+    }
+
+    @Override
+    public void onDelete(String id) {
+        DB_helper dbHelper = new DB_helper(context);
+        dbHelper.delete(Integer.parseInt(id));
+        setRecyclerView();
+        dbHelper.close();
     }
 }

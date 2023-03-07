@@ -28,13 +28,14 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.diary_note_app.R;
+import com.android.diary_note_app.activities.edit.listener.OnEmojiSelectedListener;
 import com.android.diary_note_app.db_helper.DB_helper;
 import com.android.diary_note_app.db_helper.Data;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.io.IOException;
 import java.util.Calendar;
 
-public class ScrollingFragment extends Fragment {
+public class ScrollingFragment extends Fragment implements OnEmojiSelectedListener {
 
     View v;
     Uri uri;
@@ -48,12 +49,16 @@ public class ScrollingFragment extends Fragment {
     String title;
     String content;
     CalendarDay today;
+    ImageView imageView;
+
+    String emoji_str;
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_scrolling, container, false);
         refresh();
+        setEmojiImg();
         if(getArguments() != null){
             setBundle(getArguments());
         }
@@ -102,7 +107,27 @@ public class ScrollingFragment extends Fragment {
 
     }
 
+    private void setEmojiImg(){
+        imageView = v.findViewById(R.id.edit_emojiImg);
+        imageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                setDialog();
+            }
+        });
+    }
 
+    private void setDialog(){
+        EmojiDialog emojiDialog = new EmojiDialog(v.getContext());
+        emojiDialog.setOnEmojiSelectedListener(this);
+        emojiDialog.show();
+    }
+
+    @Override
+    public void onEmojiSelected(int emoji, String str){
+        imageView.setImageResource(emoji);
+        emoji_str = str;
+    }
 
     private void setTextView(){
         date_tv = v.findViewById(R.id.edit_TV);
@@ -152,7 +177,7 @@ public class ScrollingFragment extends Fragment {
             content = content_et.getText().toString();
             String id = id_tv.getText().toString();
 
-            Data data = new Data(id, year_i, month_i, day_i, null, title, content, path);
+            Data data = new Data(id, year_i, month_i, day_i, emoji_str, title, content, path);
 
             db_helper.save(data);
             Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
