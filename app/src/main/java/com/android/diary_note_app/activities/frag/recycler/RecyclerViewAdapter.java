@@ -1,8 +1,6 @@
-package com.android.diary_note_app.activities.ui.recycler;
+package com.android.diary_note_app.activities.frag.recycler;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.provider.MediaStore;
@@ -14,13 +12,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.diary_note_app.MainActivity;
 import com.android.diary_note_app.R;
-import com.android.diary_note_app.activities.ui.recycler.listener.RecyclerDeleteListener;
-import com.android.diary_note_app.db_helper.DB_helper;
+import com.android.diary_note_app.activities.frag.recycler.listener.RecyclerDeleteListener;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -43,12 +38,10 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         this.context = context;
         this.list = list;
     }
-
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         holder.onBind(list.get(position), context);
     }
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

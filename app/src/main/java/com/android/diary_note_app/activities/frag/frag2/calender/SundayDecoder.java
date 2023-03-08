@@ -1,4 +1,4 @@
-package com.android.diary_note_app.activities.ui.calender;
+package com.android.diary_note_app.activities.frag.frag2.calender;
 
 import android.graphics.Color;
 import android.text.style.ForegroundColorSpan;

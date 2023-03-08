@@ -19,22 +19,25 @@ public class StyleSpinner {
 
     ArrayList<String> str_list;
     Spinner spinner;
-    View view;
+    View v;
     String[] fileNames;
 
     public StyleSpinner(View view){
-        this.view = view;
+        this.v = view;
         getFontList();
         setSpinner();
     }
 
     private void setSpinner() {
-        spinner = view.findViewById(R.id.edit_spiner);
+        spinner = v.findViewById(R.id.edit_spiner);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(
-                view.getContext(), android.R.layout.simple_spinner_item,fileNames);
+                v.getContext(), android.R.layout.simple_spinner_item,fileNames);
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+
+        TextView textView = v.findViewById(R.id.edit_content);
+
 
         spinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

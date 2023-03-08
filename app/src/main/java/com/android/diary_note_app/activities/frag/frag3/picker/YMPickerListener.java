@@ -1,4 +1,4 @@
-package com.android.diary_note_app.activities.ui.picker;
+package com.android.diary_note_app.activities.frag.frag3.picker;
 
 public interface YMPickerListener {
     void onPositiveClick(int h, int m);

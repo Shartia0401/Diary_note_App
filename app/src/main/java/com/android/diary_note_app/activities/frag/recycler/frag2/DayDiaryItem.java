@@ -1,4 +1,4 @@
-package com.android.diary_note_app.activities.ui.recycler.frag2;
+package com.android.diary_note_app.activities.frag.recycler.frag2;
 
 public class DayDiaryItem {
     String id;

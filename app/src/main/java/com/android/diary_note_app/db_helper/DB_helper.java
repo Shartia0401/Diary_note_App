@@ -110,6 +110,7 @@ public class DB_helper extends SQLiteOpenHelper {
         return cursor;
     }
 
+
     public Cursor getList(int year, int month, int day){
 
         SQLiteDatabase db = getReadableDatabase();
@@ -120,6 +121,18 @@ public class DB_helper extends SQLiteOpenHelper {
 
         return cursor;
     }
+
+    public Cursor getList(int year, int month){
+
+        SQLiteDatabase db = getReadableDatabase();
+        String str =
+                "Select numID, emoji, title, content, attachment From DiaryDB where year = '"+year +"' AND month = '"+month+"';";
+        Cursor cursor = db.rawQuery(str,null);
+        cursor.moveToFirst();
+
+        return cursor;
+    }
+
 
     private void callDB(String str){
         SQLiteDatabase db = getWritableDatabase();

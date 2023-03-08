@@ -1,7 +1,6 @@
-package com.android.diary_note_app.activities.ui.calender;
+package com.android.diary_note_app.activities.frag.frag2.calender;
 
 import android.graphics.Typeface;
-import android.os.Bundle;
 import android.text.style.StyleSpan;
 
 import com.prolificinteractive.materialcalendarview.CalendarDay;

@@ -12,17 +12,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.diary_note_app.R;
-import com.android.diary_note_app.activities.ui.calender.OneDayDecorator;
-import com.android.diary_note_app.activities.ui.calender.SundayDecoder;
-import com.android.diary_note_app.activities.ui.recycler.frag2.DayDiaryItem;
-import com.android.diary_note_app.activities.ui.recycler.frag2.Frag2Adapter;
+import com.android.diary_note_app.activities.frag.frag2.calender.OneDayDecorator;
+import com.android.diary_note_app.activities.frag.frag2.calender.SundayDecoder;
+import com.android.diary_note_app.activities.frag.recycler.frag2.DayDiaryItem;
+import com.android.diary_note_app.activities.frag.recycler.frag2.Frag2Adapter;
 import com.android.diary_note_app.db_helper.DB_helper;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
-import com.prolificinteractive.materialcalendarview.DayViewDecorator;
-import com.prolificinteractive.materialcalendarview.DayViewFacade;
 import com.prolificinteractive.materialcalendarview.MaterialCalendarView;
 import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 

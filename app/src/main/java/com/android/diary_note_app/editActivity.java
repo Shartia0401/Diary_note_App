@@ -27,9 +27,11 @@ public class editActivity extends AppCompatActivity {
         setContentView(R.layout.activity_edit);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        ActionBar actionBar = getSupportActionBar();
-        assert actionBar != null;
-        actionBar.setDisplayHomeAsUpEnabled(true);
+        ActionBar top_actionBar = getSupportActionBar();
+        assert top_actionBar != null;
+        top_actionBar.setDisplayHomeAsUpEnabled(true);
+
+
 
 
         ScrollingFragment fragment = new ScrollingFragment();

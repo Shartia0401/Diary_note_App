@@ -15,25 +15,31 @@
         <TextView
             android:id="@+id/edit_TV"
             android:layout_width="200dp"
-            android:layout_height="50dp"
+            android:layout_height="40dp"
             android:textStyle="bold"
+            android:textSize="22dp"
             android:text="XXXX년 XX월 XX일"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"/>
         <EditText
             android:id="@+id/edit_title"
-            android:hint=" 제목"
+            android:hint="제목"
             android:layout_width="400dp"
             android:layout_height="50dp"
+            android:textSize="25dp"
+            android:textStyle="bold"
+            android:background="@android:color/transparent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toBottomOf="@id/edit_TV"
+
             />
 
         <ImageView
             android:id="@+id/edit_emojiImg"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:src="@android:drawable/ic_delete"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toRightOf="@id/edit_TV"
             />
@@ -44,6 +50,8 @@
             android:layout_height="wrap_content"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
+            android:hint="내용"
+            android:background="@android:color/transparent"
             app:layout_constraintTop_toBottomOf="@id/edit_title"
             />
         <ImageView

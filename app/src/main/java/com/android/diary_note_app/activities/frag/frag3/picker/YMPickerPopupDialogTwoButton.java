@@ -1,11 +1,10 @@
-package com.android.diary_note_app.activities.ui.picker;
+package com.android.diary_note_app.activities.frag.frag3.picker;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.NumberPicker;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 

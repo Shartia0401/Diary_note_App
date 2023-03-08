@@ -1,4 +1,4 @@
-package com.android.diary_note_app.activities.ui.recycler;
+package com.android.diary_note_app.activities.frag.recycler;
 
 public class Item {
 

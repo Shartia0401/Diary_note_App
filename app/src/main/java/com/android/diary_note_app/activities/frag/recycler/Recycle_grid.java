@@ -1,11 +1,11 @@
-package com.android.diary_note_app.activities.ui.recycler;
+package com.android.diary_note_app.activities.frag.recycler;
 
 import android.content.Context;
 import android.database.Cursor;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.android.diary_note_app.activities.ui.recycler.listener.RecyclerDeleteListener;
+import com.android.diary_note_app.activities.frag.recycler.listener.RecyclerDeleteListener;
 import com.android.diary_note_app.db_helper.DB_helper;
 
 import java.util.ArrayList;

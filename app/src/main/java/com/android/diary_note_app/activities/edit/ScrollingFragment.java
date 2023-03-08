@@ -8,6 +8,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.InputType;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,13 +99,13 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
 
     private void refresh(){
         title_et = v.findViewById(R.id.edit_title);
+        title_et.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_DATETIME_VARIATION_NORMAL);
         content_et = v.findViewById(R.id.edit_content);
         id_tv = v.findViewById(R.id.edit_id);
         today = CalendarDay.today();
         setTextView();
         setDate(today.getYear(), today.getMonth(), today.getDay());
         setBtn();
-
     }
 
     private void setEmojiImg(){

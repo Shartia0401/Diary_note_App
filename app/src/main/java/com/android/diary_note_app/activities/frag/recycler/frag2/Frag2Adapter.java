@@ -1,4 +1,4 @@
-package com.android.diary_note_app.activities.ui.recycler.frag2;
+package com.android.diary_note_app.activities.frag.recycler.frag2;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -14,8 +14,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.diary_note_app.R;
-
-import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
