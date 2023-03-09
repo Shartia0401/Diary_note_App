@@ -1,6 +1,7 @@
 package com.android.diary_note_app.activities.edit;
 
 import android.content.Context;
+import android.graphics.Typeface;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -10,6 +11,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 import com.android.diary_note_app.R;
+import com.android.diary_note_app.activities.edit.listener.OnSelectFontListener;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -17,20 +19,29 @@ import java.util.ArrayList;
 
 public class StyleSpinner {
 
+
     ArrayList<String> str_list;
     Spinner spinner;
     View v;
     String[] fileNames;
 
+    ArrayAdapter<String> adapter;
+
+    OnSelectFontListener onSelectFontListener;
+
     public StyleSpinner(View view){
         this.v = view;
-        getFontList();
+        setFontList();
         setSpinner();
+    }
+
+    public void SetOnSelectFontListener(OnSelectFontListener onSelectFontListener){
+        this.onSelectFontListener = onSelectFontListener;
     }
 
     private void setSpinner() {
         spinner = v.findViewById(R.id.edit_spiner);
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(
+       adapter = new ArrayAdapter<String>(
                 v.getContext(), android.R.layout.simple_spinner_item,fileNames);
         adapter.setDropDownViewResource(
                 android.R.layout.simple_spinner_dropdown_item);
@@ -43,6 +54,9 @@ public class StyleSpinner {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int position, long l) {
                 Log.d("test", fileNames[position]);
+                if(onSelectFontListener != null){
+                    onSelectFontListener.onSelect(fileNames[position]);
+                }
             }
 
             @Override
@@ -53,7 +67,7 @@ public class StyleSpinner {
 
     }
 
-    private File[] getFontList(){
+    private void setFontList(){
         String filePath = "/system/fonts/";
         File dir = new File(filePath);
         FileFilter fileFilter = file -> file.getName().endsWith("ttf");
@@ -64,14 +78,16 @@ public class StyleSpinner {
             Log.d("test", file.toString() + "파일");
         }
 
-
-
         fileNames = new String[files.length-1];
         for(int i = 0; i < files.length-1; ++i){
             String[] str = files[i].getName().split("\\.");
             fileNames[i] = str[0];
         }
 
-        return files;
+    }
+
+    public void setFont(String font){
+        int initPosition = adapter.getPosition(font);
+        spinner.setSelection(initPosition);
     }
 }

@@ -53,26 +53,19 @@ public class OpenEditAct {
 
         String id = id_TV.getText().toString();
 
-        Cursor cursor = db_helper.getData("DiaryDB",id);
-        cursor.moveToFirst();
+        Cursor[] cursor = db_helper.getData(id);
+        cursor[0].moveToFirst();
         String[] a = new String[8];
 
         try{
             for(int i = 0; i < a.length; i++){
-                a[i] = cursor.getString(i);
+                a[i] = cursor[0].getString(i);
             }
         }catch (CursorIndexOutOfBoundsException e){
             isException = true;
         }
 
         bundle.putString("id", a[0]);
-        bundle.putString("year", a[1]);
-        bundle.putString("month", a[2]);
-        bundle.putString("day", a[3]);
-        bundle.putString("emoji", a[4]);
-        bundle.putString("title", a[5]);
-        bundle.putString("content", a[6]);
-        bundle.putString("attachment", a[7]);
 
         return bundle;
     }

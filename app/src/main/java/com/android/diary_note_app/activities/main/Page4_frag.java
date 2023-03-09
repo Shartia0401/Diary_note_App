@@ -16,15 +16,11 @@ import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.frag.recycler.Recycle_grid;
 
 public class Page4_frag extends Fragment {
-    View v;
-    Uri imagePath;
     RecyclerView recyclerView;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        v = inflater.inflate(R.layout.fragment_page4_frag,container,false);
-
-
+        View v = inflater.inflate(R.layout.fragment_page4_frag,container,false);
         setBtn(v);
         return v;
     }
@@ -32,7 +28,6 @@ public class Page4_frag extends Fragment {
     public void setBtn(View v){
         recyclerView = v.findViewById(R.id.frag4_recycle);
         new Recycle_grid(recyclerView, getActivity(), 4);
-
     }
 
 
