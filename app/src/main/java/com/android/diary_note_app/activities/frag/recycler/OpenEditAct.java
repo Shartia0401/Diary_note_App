@@ -19,16 +19,18 @@ public class OpenEditAct {
     DB_helper db_helper;
     View view;
     boolean isException;
+    String id;
 
-    public OpenEditAct(View view, int frag){
+    public OpenEditAct(View view, String id){
         this.view = view;
-        setAct(frag);
+        this.id = id;
+        setAct();
 
     }
 
-    private void setAct(int frag){
+    private void setAct(){
         Intent intent = new Intent(view.getContext(), editActivity.class);
-        intent.putExtra("data", getData(frag));
+        intent.putExtra("data", getData());
         if(!isException){
             view.getContext().startActivity(intent);
         }else{
@@ -39,19 +41,10 @@ public class OpenEditAct {
     }
 
     @NonNull
-    private Bundle getData(int frag){
-        TextView id_TV;
-
-        if(frag == 1){
-            id_TV = view.findViewById(R.id.frag1_id);
-        }else{
-            id_TV = view.findViewById(R.id.frag4_IdTextView);
-        }
+    private Bundle getData(){
 
         db_helper = new DB_helper(view.getContext());
         Bundle bundle = new Bundle();
-
-        String id = id_TV.getText().toString();
 
         Cursor[] cursor = db_helper.getData(id);
         cursor[0].moveToFirst();
@@ -69,4 +62,5 @@ public class OpenEditAct {
 
         return bundle;
     }
+
 }

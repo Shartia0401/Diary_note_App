@@ -17,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.frag.recycler.listener.RecyclerDeleteListener;
 
+import org.w3c.dom.Text;
+
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -47,7 +49,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View view = LayoutInflater.from(context).inflate(R.layout.recylcerview_row, parent, false);
 
-        view.setOnClickListener(view1 -> new OpenEditAct(view1, 1));
+        view.setOnClickListener(view1 -> {
+            TextView tView = view1.findViewById(R.id.frag1_id);
+            String id = tView.getText().toString();
+            new OpenEditAct(view1, id);
+        });
 
         view.setOnLongClickListener(view12 -> {
             TextView tv = view12.findViewById(R.id.frag1_id);

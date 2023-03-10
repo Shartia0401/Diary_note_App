@@ -1,11 +1,17 @@
 package com.android.diary_note_app.db_helper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
+
+import com.android.diary_note_app.activities.frag.recycler.frag2.DayDiaryItem;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DB_helper extends SQLiteOpenHelper {
     public DB_helper(@Nullable Context context) {
@@ -15,7 +21,6 @@ public class DB_helper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         setDiaryTB(db);
         setStyleTB(db);
-
     }
     @Override
     public void onUpgrade(SQLiteDatabase db, int i, int i1) {
@@ -79,7 +84,8 @@ public class DB_helper extends SQLiteOpenHelper {
                         "'"+data.emoji+"', " +
                         "'"+data.title+"', " +
                         "'"+data.content+"', " +
-                        "'"+data.attachment+"');";
+                        "'"+data.attachment+"'" +
+                        ");";
         callDB(str);
 
         Cursor cursor = getList();
@@ -103,12 +109,7 @@ public class DB_helper extends SQLiteOpenHelper {
 
         style_Update(data);
     }
-    public void order(){
-        String str =
-                "Select * from DiaryDB Order by numID";
 
-        callDB(str);
-    }
     public void delete(int id){
         String str =
                 "DELETE FROM DiaryDB WHERE numID= '"+ id + "';";
@@ -159,6 +160,8 @@ public class DB_helper extends SQLiteOpenHelper {
         db.execSQL(str);
         db.close();
     }
+
+
     public Cursor[] getData(String id){
         SQLiteDatabase db = getReadableDatabase();
         String DiaryDB =

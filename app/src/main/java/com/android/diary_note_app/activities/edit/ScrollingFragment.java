@@ -5,9 +5,11 @@ import static android.app.Activity.RESULT_OK;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Bitmap;
 import android.graphics.Paint;
 import android.graphics.Typeface;
+import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -39,6 +41,7 @@ import com.android.diary_note_app.db_helper.DB_helper;
 import com.android.diary_note_app.db_helper.Data;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.io.IOException;
+import java.time.LocalTime;
 import java.util.Calendar;
 
 public class ScrollingFragment extends Fragment implements OnEmojiSelectedListener , OnSelectFontListener {
@@ -89,11 +92,16 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
         String emoji = cursor_diary.getString(4);
         String title = cursor_diary.getString(5);
         String content = cursor_diary.getString(6);
-        String path = cursor_diary.getString(7);
+        path = cursor_diary.getString(7);
+        String font = null;
+        try{
+            font = cursor_style.getString(1);
+            String size = cursor_style.getString(2);
+            String color = cursor_style.getString(3);
+        }catch(CursorIndexOutOfBoundsException e){
+            e.getStackTrace();
+        }
 
-        String font = cursor_style.getString(1);
-        String size = cursor_style.getString(2);
-        String color = cursor_style.getString(3);
 
         String str = year + "년 " + month + "월 " + day + "일";
 
@@ -151,6 +159,16 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
         setTextView();
         setDate(today.getYear(), today.getMonth(), today.getDay());
         setBtn();
+
+        ImageView image = v.findViewById(R.id.edit_imageView);
+        image.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                image.setImageDrawable(null);
+                path = null;
+                return true;
+            }
+        });
 
         content_et.addTextChangedListener(new TextWatcher() {
             @Override
@@ -230,9 +248,11 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
 
             db_helper.save(data);
             Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
+
             db_helper.close();
         });
     }
+
     ActivityResultLauncher<Intent> activityResultLauncher = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<>() {
@@ -256,12 +276,12 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
                 }
             }
     );
+
     @Override
     public void onSelect(String str) {
         setFont(str);
     }
     private void setFont(String str){
-
         if(!str.equals("null")){
             currentFont = str;
             content_et.setText(content_et.getText());

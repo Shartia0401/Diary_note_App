@@ -31,12 +31,13 @@ import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class Page3_frag extends Fragment implements OnItemClickListener {
+public class Page3_frag extends Fragment{
 
     TextView date_Tv;
     TextView happy_Tv;
     TextView ache_Tv;
     TextView angry_Tv;
+    int index;
 
     ArrayList<String[]> emojiList;
 
@@ -51,7 +52,8 @@ public class Page3_frag extends Fragment implements OnItemClickListener {
         refresh();
         setDate();
         setDialog();
-        setBottomDialog();
+        setEmojiList(CalendarDay.today().getYear(), CalendarDay.today().getMonth());
+        imgBtnOnClick();
 
         return v;
     }
@@ -107,15 +109,18 @@ public class Page3_frag extends Fragment implements OnItemClickListener {
         ache = 0;
         angry = 0;
 
-
+        boolean a = true;
         while (cursor.moveToNext()) {
+            if(a){
+                cursor.moveToFirst();
+                a = false;
+            }
             String numID = cursor.getString(0);
             String emoji = cursor.getString(1);
             String[] set = {numID, emoji};
 
             if (!emoji.equals("null")) {
-                Log.d("test", emoji);
-                classification(emoji);
+                classification_plus(emoji);
                 emojiList.add(set);
             }
         }
@@ -130,22 +135,35 @@ public class Page3_frag extends Fragment implements OnItemClickListener {
         ache_Tv.setText(ache_s);
         angry_Tv.setText(angry_s);
     }
+    private void imgBtnOnClick(){
+        ImageView happy_img = v.findViewById(R.id.frag3_happy);
+        ImageView ache_img = v.findViewById(R.id.frag3_ache);
+        ImageView angry_img = v.findViewById(R.id.frag3_angry);
+        happy_img.setTag("happy");
+        ache_img.setTag("ache");
+        angry_img.setTag("angry");
 
-    private void setBottomDialog(){
-        DayDiaryItem dayDiaryItem = new DayDiaryItem();
-
-        ImageView imageView = v.findViewById(R.id.frag3_happy);
-
+        onClick(happy_img);
+        onClick(ache_img);
+        onClick(angry_img);
+    }
+    private void onClick(ImageView imageView){
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Bot_dialog_set botDialogSet = new Bot_dialog_set();
-
+                setBottom(imageView);
             }
         });
     }
 
-    private void classification(String emoji){
+    private void setBottom(ImageView imageView){
+        String[] list = setBottomNavigation(imageView.getTag().toString());
+        Bot_dialog_set botDialogSet = new Bot_dialog_set(this, list);
+        botDialogSet.setDialog();
+
+    }
+
+    private void classification_plus(String emoji){
         switch (emoji){
             case "happy":
                 ++happy;
@@ -159,7 +177,7 @@ public class Page3_frag extends Fragment implements OnItemClickListener {
         }
     }
 
-    private void setBottomNavigation(String emj){
+    private String[] setBottomNavigation(String emj){
         int length;
 
         switch (emj){
@@ -178,17 +196,19 @@ public class Page3_frag extends Fragment implements OnItemClickListener {
         }
 
         String[] idList = new String[length];
-        int index = idList.length;
+        index = idList.length-1;
         for(String[] str : emojiList){
             if(str[1].equals(emj)){
-                --index;
                 idList[index] = str[0];
+                index--;
             }
         }
+
+        for(String id : idList){
+            Log.d("test", id);
+        }
+
+        return idList;
     }
 
-    @Override
-    public void onItemClick(int Position) {
-
-    }
 }

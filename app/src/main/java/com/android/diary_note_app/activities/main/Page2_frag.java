@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.frag.frag2.calender.OneDayDecorator;
 import com.android.diary_note_app.activities.frag.frag2.calender.SundayDecoder;
+import com.android.diary_note_app.activities.frag.frag3.bot_dialog.OnItemClickListener;
+import com.android.diary_note_app.activities.frag.recycler.OpenEditAct;
 import com.android.diary_note_app.activities.frag.recycler.frag2.DayDiaryItem;
 import com.android.diary_note_app.activities.frag.recycler.frag2.Frag2Adapter;
 import com.android.diary_note_app.db_helper.DB_helper;
@@ -25,7 +27,7 @@ import com.prolificinteractive.materialcalendarview.OnDateSelectedListener;
 
 import java.util.ArrayList;
 
-public class Page2_frag extends Fragment {
+public class Page2_frag extends Fragment implements OnItemClickListener {
     MaterialCalendarView materialCalendarView;
     TextView textView;
 
@@ -48,7 +50,7 @@ public class Page2_frag extends Fragment {
     private void setRecycler(){
         recyclerView = v.findViewById(R.id.frag2_recycler);
         adapter = new Frag2Adapter(v.getContext());
-
+        adapter.setOnClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
     }
@@ -122,6 +124,8 @@ public class Page2_frag extends Fragment {
     }
 
 
-
-
+    @Override
+    public void onItemClick(String id) {
+        new OpenEditAct(v, id);
+    }
 }
