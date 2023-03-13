@@ -41,6 +41,8 @@ public class Recycle_grid implements RecyclerDeleteListener {
             frag4recyclerViewAdapter = new frag4_RecyclerViewAdapter(context, list);
             recyclerView.setAdapter(frag4recyclerViewAdapter);
         }
+
+
     }
 
     private ArrayList<Item> setList(Context context, int frag){

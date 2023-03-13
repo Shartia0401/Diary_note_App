@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -13,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.frag.recycler.OpenEditAct;
+import com.android.diary_note_app.activities.frag.recycler.RecyclerViewEmptySupport;
 import com.android.diary_note_app.activities.frag.recycler.frag2.DayDiaryItem;
 import com.android.diary_note_app.activities.frag.recycler.frag2.Frag2Adapter;
 import com.android.diary_note_app.db_helper.DB_helper;
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 
 public class OrderBottomDialogFragment extends BottomSheetDialogFragment implements OnItemClickListener{
 
-    RecyclerView recyclerView;
+    RecyclerViewEmptySupport recyclerView;
     Frag2Adapter adapter;
     View v;
 
@@ -46,17 +48,17 @@ public class OrderBottomDialogFragment extends BottomSheetDialogFragment impleme
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-
     }
 
     private void setRecycler(){
         recyclerView = v.findViewById(R.id.frag3_bottom_RecyclerView);
+        ViewGroup viewGroup = v.findViewById(R.id.frag3_viewGroup);
+        recyclerView.setEmptyView(viewGroup );
         adapter = new Frag2Adapter(v.getContext());
         adapter.setDiaryList(list);
         adapter.setOnClickListener(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(v.getContext()));
-
     }
 
 

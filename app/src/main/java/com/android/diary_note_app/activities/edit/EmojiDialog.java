@@ -3,6 +3,9 @@ package com.android.diary_note_app.activities.edit;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.graphics.Color;
+import android.graphics.drawable.ShapeDrawable;
+import android.graphics.drawable.shapes.RoundRectShape;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,9 +40,15 @@ public class EmojiDialog extends Dialog {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.emoji_select_dialog);
-        setButton();
 
+        ShapeDrawable shapeDrawable = new ShapeDrawable();
+        shapeDrawable.setShape(new RoundRectShape(new float[]{30, 30, 30, 30, 30, 30, 30, 30}, null, null));
+        shapeDrawable.getPaint().setColor(Color.WHITE);
+        this.getWindow().setBackgroundDrawable(shapeDrawable);
+        setButton();
     }
+
+
 
     private void setButton(){
         ImageButton happy_btn, ache_btn, angry_btn;

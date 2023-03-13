@@ -110,7 +110,12 @@ public class Page3_frag extends Fragment{
         angry = 0;
 
         boolean a = true;
-        while (cursor.moveToNext()) {
+
+        do {
+            if(cursor.getCount() <= 0){
+                break;
+            }
+
             if(a){
                 cursor.moveToFirst();
                 a = false;
@@ -124,6 +129,8 @@ public class Page3_frag extends Fragment{
                 emojiList.add(set);
             }
         }
+        while (cursor.moveToNext());
+
         cursor.close();
         dbHelper.close();
 

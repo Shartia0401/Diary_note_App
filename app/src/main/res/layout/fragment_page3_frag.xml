@@ -7,7 +7,7 @@
 
     <TextView
         android:id="@+id/date_Tv"
-        android:layout_width="170dp"
+        android:layout_width="wrap_content"
         android:layout_height="50dp"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -16,8 +16,17 @@
         android:gravity="center"
         android:textColor="#FFBB66"
         android:textStyle="bold"
-        android:textSize="16dp"
+        android:textSize="25dp"
         android:layout_marginTop="20dp"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="15dp"
+        android:textColor="@color/mainColor"
+        android:text="▼"
+        android:layout_marginLeft="5dp"
+        app:layout_constraintLeft_toRightOf="@id/date_Tv"
+        app:layout_constraintBottom_toBottomOf="@id/date_Tv"/>
 
     <RelativeLayout
         android:layout_width="match_parent"

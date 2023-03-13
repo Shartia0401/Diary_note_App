@@ -1,22 +1,19 @@
 package com.android.diary_note_app.activities.edit;
 
 import static android.app.Activity.RESULT_OK;
-
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.CursorIndexOutOfBoundsException;
 import android.graphics.Bitmap;
-import android.graphics.Paint;
 import android.graphics.Typeface;
-import android.media.Image;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.InputType;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,7 +22,6 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -33,40 +29,42 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.fragment.app.Fragment;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.edit.listener.OnEmojiSelectedListener;
 import com.android.diary_note_app.activities.edit.listener.OnSelectFontListener;
 import com.android.diary_note_app.db_helper.DB_helper;
 import com.android.diary_note_app.db_helper.Data;
+import com.android.diary_note_app.editActivity;
 import com.prolificinteractive.materialcalendarview.CalendarDay;
 import java.io.IOException;
-import java.time.LocalTime;
 import java.util.Calendar;
 
-public class ScrollingFragment extends Fragment implements OnEmojiSelectedListener , OnSelectFontListener {
+public class ScrollingFragment extends Fragment implements OnEmojiSelectedListener , OnSelectFontListener, View.OnClickListener {
 
     View v;
     Uri uri;
     String path;
     int year_i, month_i, day_i;
-    EditText title_et;
-    EditText content_et;
-    TextView date_tv;
-    TextView id_tv;
-    String title;
-    String content;
+    EditText title_et, content_et;
+    TextView date_tv, id_tv;
+    String title, content;
     CalendarDay today;
     ImageView imageView;
     String emoji_str;
     String currentFont;
     StyleSpinner styleSpinner;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         v = inflater.inflate(R.layout.fragment_scrolling, container, false);
+
         refresh();
         setEmojiImg();
+        if(getActivity() instanceof editActivity){
+            editActivity editActivity = (editActivity) getActivity();
+            editActivity.setOnclick(this);
+        }
 
         styleSpinner = new StyleSpinner(v);
         styleSpinner.SetOnSelectFontListener(this);
@@ -74,9 +72,10 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
             setBundle(getArguments());
         }
 
-
         return v;
     }
+
+
     private void setBundle(Bundle bundle){
         String id = bundle.getString("id");
         DB_helper dbHelper = new DB_helper(v.getContext());
@@ -101,6 +100,8 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
         }catch(CursorIndexOutOfBoundsException e){
             e.getStackTrace();
         }
+
+
 
 
         String str = year + "년 " + month + "월 " + day + "일";
@@ -227,8 +228,8 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
         date_tv.setText(date);
     }
     public void setBtn(){
+
         Button imageBtn = v.findViewById(R.id.edit_btn);
-        Button saveBtn = v.findViewById(R.id.edit_savebtn);
 
         imageBtn.setOnClickListener(view -> {
             Intent intent = new Intent(Intent.ACTION_PICK);
@@ -236,20 +237,6 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
             intent.setAction(Intent.ACTION_PICK);
             activityResultLauncher.launch(intent);
             Toast.makeText(getContext(), "파일을 불러옵니다", Toast.LENGTH_SHORT).show();
-        });
-
-        saveBtn.setOnClickListener(view -> {
-            DB_helper db_helper = new DB_helper(getContext());
-            title = title_et.getText().toString();
-            content = content_et.getText().toString();
-            String id = id_tv.getText().toString();
-
-            Data data = new Data(id, year_i, month_i, day_i, emoji_str, title, content, path, currentFont, null, null);
-
-            db_helper.save(data);
-            Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
-
-            db_helper.close();
         });
     }
 
@@ -292,5 +279,20 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
 
 
         }
+    }
+
+    @Override
+    public void onClick(View view) {
+        title = title_et.getText().toString();
+        content = content_et.getText().toString();
+        String id = id_tv.getText().toString();
+
+        Data data = new Data(id, year_i, month_i, day_i, emoji_str, title, content, path, currentFont, null, null);
+
+        DB_helper db_helper = new DB_helper(getContext());
+        db_helper.save(data);
+        db_helper.close();
+
+        Toast.makeText(getContext(), "저장이 됐습니다.", Toast.LENGTH_SHORT).show();
     }
 }

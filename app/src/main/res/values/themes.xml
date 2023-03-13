@@ -12,12 +12,14 @@
         <!-- Status bar color. -->
         <item name="android:statusBarColor">#FFFFFF</item>
         <!-- Customize your theme here. -->
+        <item name="fontFamily">@font/diaryfont</item>
     </style>
 
     <style name="Theme.Diary_note_App.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
     </style>
+
 
     <style name="Theme.Diary_note_App.AppBarOverlay" parent="ThemeOverlay.AppCompat.Dark.ActionBar" />
 

@@ -9,13 +9,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 
 import com.android.diary_note_app.R;
 import com.android.diary_note_app.activities.frag.recycler.Recycle_grid;
+import com.android.diary_note_app.activities.frag.recycler.RecyclerViewEmptySupport;
 
 public class Page1_frag extends Fragment {
 
-    RecyclerView recyclerView;
+    RecyclerViewEmptySupport recyclerView;
     View v;
     @Nullable
     @Override
@@ -26,7 +28,10 @@ public class Page1_frag extends Fragment {
     }
 
     public void setRecyclerView() {
+        TextView list_empty = v.findViewById(R.id.frag1_empty);
         recyclerView = v.findViewById(R.id.recycle);
+        recyclerView.setEmptyView(list_empty);
+
         new Recycle_grid(recyclerView, getActivity(), 1);
 
     }

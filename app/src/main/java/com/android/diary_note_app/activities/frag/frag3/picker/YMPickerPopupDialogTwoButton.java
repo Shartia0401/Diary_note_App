@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.NumberPicker;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 
@@ -17,7 +18,7 @@ public class YMPickerPopupDialogTwoButton extends Dialog {
     private YMPickerListener listener;
     private NumberPicker year, month;
 
-    private Button tvPositive, tvNegative;
+    private TextView tvPositive, tvNegative;
 
     private int setYearValue;
     private int setMonthValue;

@@ -1,10 +1,11 @@
 package com.android.diary_note_app;
 
-import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -15,27 +16,23 @@ import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.android.diary_note_app.activities.edit.ScrollingFragment;
-import com.android.diary_note_app.db_helper.DB_helper;
 
 public class editActivity extends AppCompatActivity {
 
-    DB_helper db_helper;
+    View.OnClickListener clickListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_edit);
-        Toolbar toolbar = findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.edit_toolbar);
         setSupportActionBar(toolbar);
         ActionBar top_actionBar = getSupportActionBar();
         assert top_actionBar != null;
         top_actionBar.setDisplayHomeAsUpEnabled(true);
 
-
-
-
         ScrollingFragment fragment = new ScrollingFragment();
-
+        setbtn();
 
         if(getIntent() != null){
             Bundle bundle = getIntent().getBundleExtra("data");
@@ -52,6 +49,19 @@ public class editActivity extends AppCompatActivity {
     private void applyColors() {
         getWindow().setStatusBarColor(Color.parseColor("#FFBB66"));
         getWindow().setNavigationBarColor(Color.parseColor("#FFBB66"));
+    }
+
+    public void setbtn(){
+        Button button = findViewById(R.id.edit_toolbar_btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(clickListener != null){
+                    clickListener.onClick(view);
+                }
+            }
+        });
+
     }
 
     @Override
@@ -74,4 +84,10 @@ public class editActivity extends AppCompatActivity {
         }
         return false;
     }
+
+    public void setOnclick(View.OnClickListener listener){
+        this.clickListener = listener;
+    }
+
+
 }

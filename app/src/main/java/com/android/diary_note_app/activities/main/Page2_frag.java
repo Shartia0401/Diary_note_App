@@ -29,7 +29,7 @@ import java.util.ArrayList;
 
 public class Page2_frag extends Fragment implements OnItemClickListener {
     MaterialCalendarView materialCalendarView;
-    TextView textView;
+
 
     String currentDate;
     RecyclerView recyclerView;
@@ -94,12 +94,7 @@ public class Page2_frag extends Fragment implements OnItemClickListener {
     private void setCalendar(){
 
         materialCalendarView = v.findViewById(R.id.Calender);
-        textView = v.findViewById(R.id.CalenderTv);
-        try {
-            textView.setText(currentDate);
-        }catch (NullPointerException e){
-            System.err.println(e.getMessage());
-        }
+
         materialCalendarView.addDecorators(
                 new SundayDecoder(),
                 new OneDayDecorator()
@@ -113,8 +108,6 @@ public class Page2_frag extends Fragment implements OnItemClickListener {
 
                 String a = year + "년 " +month+ "월 " + day + "일";
                 currentDate = a;
-                textView.setText(currentDate);
-
 
                 setClickEvent(dbList(date.getYear(), date.getMonth(), date.getDay()));
 
