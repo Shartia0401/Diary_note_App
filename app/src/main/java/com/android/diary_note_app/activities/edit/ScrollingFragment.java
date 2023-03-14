@@ -157,6 +157,7 @@ public class ScrollingFragment extends Fragment implements OnEmojiSelectedListen
         id_tv = v.findViewById(R.id.edit_id);
         today = CalendarDay.today();
         currentFont = "null";
+        emoji_str = "happy";
         setTextView();
         setDate(today.getYear(), today.getMonth(), today.getDay());
         setBtn();

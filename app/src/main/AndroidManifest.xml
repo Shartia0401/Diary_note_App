@@ -20,8 +20,9 @@
         android:theme="@style/Theme.Diary_note_App"
         tools:targetApi="s">
         <activity
+            android:launchMode="singleInstance"
             android:name=".MainActivity"
-            android:configChanges="orientation"
+            android:configChanges="orientation|keyboardHidden"
             android:exported="false" />
         <activity
             android:name=".tutorialsActivity"

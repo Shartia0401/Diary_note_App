@@ -20,6 +20,8 @@
 
             </com.android.diary_note_app.activities.frag.recycler.RecyclerViewEmptySupport>
 
+
+
             <androidx.constraintlayout.widget.ConstraintLayout
                 android:id="@+id/frag3_viewGroup"
                 android:layout_width="match_parent"
